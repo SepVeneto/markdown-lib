@@ -30,6 +30,7 @@ export function withConfigProvider(App: Component) {
     name: 'VPConfigProvider',
     setup(_, { slots }) {
       const { theme } = useData()
+      console.log('theme', theme)
       const config = computed(() => resolveConfig(theme.value))
       provide(configSymbol, config)
       return () => h(App, null, slots)
