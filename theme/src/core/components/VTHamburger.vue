@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useConfig } from '../../theme/composables/config'
+import { useConfig } from '../../vitepress/composables/config'
 
 const { config } = useConfig()
 

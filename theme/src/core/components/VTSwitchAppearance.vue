@@ -2,7 +2,7 @@
 import VTSwitch from './VTSwitch.vue'
 import VTIconSun from './icons/VTIconSun.vue'
 import VTIconMoon from './icons/VTIconMoon.vue'
-import { useConfig } from '../../theme/composables/config'
+import { useConfig } from '../../vitepress/composables/config'
 
 const { config } = useConfig()
 

@@ -1,7 +1,5 @@
-import '../theme/styles/index.css'
-import { withConfigProvider } from './composables/config'
-import VPApp from './components/VPApp.vue'
+import { VPTheme } from '@markdown-lib/theme'
 
 export default {
-  Layout: withConfigProvider(VPApp)
+  ...VPTheme
 }
