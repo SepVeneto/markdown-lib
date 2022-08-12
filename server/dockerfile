@@ -1,0 +1,14 @@
+FROM node:16.11.0
+
+COPY ./package.json /app/
+COPY ./src /app/src
+
+WORKDIR /app
+
+RUN ls && npm config set registry http://10.7.12.26:4873/ && npm i -g pnpm && pnpm i
+
+EXPOSE 8000 
+
+VOLUME [ "/data" ]
+
+CMD ["npm", "run", "dev"]

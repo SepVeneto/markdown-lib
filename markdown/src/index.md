@@ -1,5 +1,8 @@
 ---
-outline: false
-ads: false
 ---
-# test
+
+<script setup>
+import Home from "/@theme/components/Home.vue"
+</script>
+
+<Home />

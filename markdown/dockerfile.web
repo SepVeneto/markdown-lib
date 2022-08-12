@@ -1,0 +1,11 @@
+FROM node:16.11.0
+
+COPY . /app/
+
+WORKDIR /app
+
+RUN npm config set registry http://10.7.12.26:4873/ && npm i -g pnpm && pnpm i
+
+VOLUME [ "/app/dist" ]
+
+CMD ["npm", "run", "build"]

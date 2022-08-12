@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
     "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "lib": ["ESNext", "DOM"],
+    "paths": {
+      "/@theme/*": [".vitepress/theme/*"]
+    }
   },
-  "include": ["src", "types"],
+  "include": [
+    ".vitepress/**/*"
+  ],
   "exclude": ["node_modules"]
 }
