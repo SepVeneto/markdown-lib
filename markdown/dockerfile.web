@@ -6,6 +6,6 @@ WORKDIR /app
 
 RUN npm config set registry http://10.7.12.26:4873/ && npm i -g pnpm && pnpm i
 
-VOLUME [ "/app/dist" ]
+VOLUME [ "/app/.vitepress/dist" ]
 
 CMD ["npm", "run", "build"]
