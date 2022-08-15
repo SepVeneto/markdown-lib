@@ -1,13 +1,16 @@
 FROM node:16.11.0
 
-COPY . /
+COPY . /app
+
+WORKDIR /app
 
 RUN npm config set registry http://10.7.12.26:4873 && \
     npm i -g pnpm && \
-    pnpm i && \
-    pnpm run build
+    pnpm install
 
 # node port
 EXPOSE 8000
 
-VOLUME ["/markdown/.vitepress/dist", "/server/markdown"]
+VOLUME ["/app/markdown/.vitepress/dist", "/app/markdown/src"]
+
+CMD ["pnpm", "run", "bootstrap"]

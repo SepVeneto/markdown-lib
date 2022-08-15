@@ -9,7 +9,7 @@ envFlow.config()
 
 const app = new Koa()
 const router = new Router()
-export const OUT_DIR = process.env.NODE_ENV == 'development' ? path.resolve(__dirname, '../../markdown/src') : '/data'
+export const OUT_DIR = path.resolve(__dirname, '../../markdown/src')
 
 apis(router)
 app.use(router.routes());

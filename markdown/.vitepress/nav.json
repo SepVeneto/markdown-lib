@@ -1,0 +1,7 @@
+[
+  {
+    "text": "文档",
+    "activeMatch": "^/(guide|style-guide|cookbook|examples)/",
+    "link": "/docs/"
+  }
+]

@@ -58,11 +58,11 @@ export default function init(router: Router) {
   }), async (ctx) => {
     const files = ctx.request.files
     const sidebar = await getDir('docs')
-    fs.writeFile('E:\\markdown-lib\\markdown\\.vitepress\\sidebar.json', JSON.stringify(sidebar, null, 2), 'utf-8')
+    fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
     // const sidebar = JSON.parse(await fs.readFile('E:\\markdown-lib\\markdown\\.vitepress\\sidebar.json', 'utf-8'))
     // console.log(sidebar)
     ctx.response.body = '上传成功'
-    exec('docker run markdown-web', (err, stdout, stderr) => {
+    exec('cd /app/markdown && npm run build', (err, stdout, stderr) => {
       if (err) {
         console.error(err)
         return
