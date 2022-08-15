@@ -1,6 +1,6 @@
 import { defineConfigWithTheme } from "vitepress";
-import nav from './nav.json'
-import sidebarJson from './sidebar.json'
+import nav from './config/nav.json'
+import sidebarJson from './config/sidebar.json'
 
 export const sidebar = sidebarJson
 
