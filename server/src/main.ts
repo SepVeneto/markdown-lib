@@ -3,23 +3,13 @@ import Router from 'koa-router'
 import koaBody from 'koa-body'
 import path from 'path'
 import apis from './router'
+import envFlow from 'dotenv-flow'
+
+envFlow.config()
 
 const app = new Koa()
 const router = new Router()
-app.use(koaBody({
-  multipart: true,
-  formidable: {
-    uploadDir: '/data',
-    keepExtensions: true,
-    onFileBegin: (name, file) => {
-      const dir = '/data'
-      file.filepath = `${dir}/${file.originalFilename}`
-    }
-  },
-  onError(err) {
-    console.error(err)
-  }
-}))
+export const OUT_DIR = process.env.NODE_ENV == 'development' ? path.resolve(__dirname, '../../markdown/src') : '/data'
 
 apis(router)
 app.use(router.routes());

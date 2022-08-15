@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
     "target": "esnext",
     "useDefineForClassFields": true,
     "baseUrl": ".",

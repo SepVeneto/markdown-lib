@@ -7,7 +7,7 @@ importers:
 
   markdown:
     specifiers:
-      '@markdown-lib/theme': 'workspace: *'
+      '@markdown-lib/theme': ^1.0.0
       '@types/node': ^18.6.5
       axios: ^0.27.2
       vitepress: 1.0.0-alpha.4
@@ -22,8 +22,10 @@ importers:
 
   server:
     specifiers:
+      '@types/dotenv-flow': ^3.2.0
       '@types/koa': ^2.13.5
       '@types/koa-router': ^7.4.4
+      dotenv-flow: ^3.2.0
       esno: ^0.16.3
       koa: ^2.13.4
       koa-body: ^5.0.0
@@ -35,6 +37,8 @@ importers:
       koa-body: 5.0.0
       koa-router: 12.0.0
     devDependencies:
+      '@types/dotenv-flow': 3.2.0
+      dotenv-flow: 3.2.0
       esno: 0.16.3
 
   theme:
@@ -292,6 +296,10 @@ packages:
       '@types/keygrip': 1.0.2
       '@types/node': 18.7.1
     dev: false
+
+  /@types/dotenv-flow/3.2.0:
+    resolution: {integrity: sha512-A79hbPwocbYkcTwGcDOFbKDuqyVo5mLAz/6Iq465YZ7R7Go5bT1PIM8I2jlPQkaD9u9fbotGVLkUPhX+9XUHfw==}
+    dev: true
 
   /@types/express-serve-static-core/4.17.30:
     resolution: {integrity: sha512-gstzbTWro2/nFed1WXtf+TtrpwxH7Ggs4RLYTLbeVgIkUQOI3WG/JKjgeOU1zXDvezllupjrf8OPIdvTbIaVOQ==}
@@ -759,6 +767,18 @@ packages:
       asap: 2.0.6
       wrappy: 1.0.2
     dev: false
+
+  /dotenv-flow/3.2.0:
+    resolution: {integrity: sha512-GEB6RrR4AbqDJvNSFrYHqZ33IKKbzkvLYiD5eo4+9aFXr4Y4G+QaFrB/fNp0y6McWBmvaPn3ZNjIufnj8irCtg==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      dotenv: 8.6.0
+    dev: true
+
+  /dotenv/8.6.0:
+    resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
+    engines: {node: '>=10'}
+    dev: true
 
   /ee-first/1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}

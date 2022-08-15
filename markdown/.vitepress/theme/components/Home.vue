@@ -20,7 +20,7 @@ function onChange(e: any) {
   const file = e.target.files[0]
   const form = new FormData()
   form.append('file', file)
-  request.put('/markdown', form)
+  request.put('/markdown/docs', form)
   // form.appen
 }
 </script>
