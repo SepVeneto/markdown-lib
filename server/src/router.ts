@@ -3,6 +3,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import koaBody from "koa-body";
 import { OUT_DIR } from "./main";
+import { exec } from 'child_process'
 
 export type SidebarItem = {
   text: string,
@@ -61,5 +62,15 @@ export default function init(router: Router) {
     // const sidebar = JSON.parse(await fs.readFile('E:\\markdown-lib\\markdown\\.vitepress\\sidebar.json', 'utf-8'))
     // console.log(sidebar)
     ctx.response.body = '上传成功'
+    exec('docker run markdown-web', (err, stdout, stderr) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log(`stdout: ${stdout}`)
+      if (stderr) {
+        console.error(`stderr: ${stderr}`)
+      }
+    })
   })
 }
