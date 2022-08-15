@@ -4,6 +4,9 @@ import path from 'path'
 import koaBody from "koa-body";
 import { OUT_DIR } from "./main";
 import { exec } from 'child_process'
+import os from 'os'
+
+const SEPARATOR = os.platform() === 'win32' ? '\\' : '/'
 
 export type SidebarItem = {
   text: string,
@@ -16,16 +19,17 @@ export type Sidebar = {
 }
 
 async function getDir(folder: string) {
+  // const dirs = await fs.readdir(path.resolve(OUT_DIR, folder, 'md'), { withFileTypes: true })
+  const items = await getFiles(path.resolve(OUT_DIR, folder, 'md'))
+  // for (const dir of dirs) {
+  //   if (dir.isDirectory()) {
+  //     const _folder = sidebar[`/${folder}/`][0]
+  //     _folder.items = await getFiles(path.join(OUT_DIR, dir.name))
+  //   }
+  // }
   const sidebar: Record<string, Sidebar[]> = {
-    [`/${folder}/`]: [{ text: folder, items: [] }]
+    [`/${folder}/`]: [{ text: folder, items }]
   };
-  const dirs = await fs.readdir(OUT_DIR, { withFileTypes: true })
-  for (const dir of dirs) {
-    if (dir.isDirectory()) {
-      const _folder = sidebar[`/${folder}/`][0]
-      _folder.items = await getFiles(path.join(OUT_DIR, dir.name))
-    }
-  }
   return sidebar
 }
 async function getFiles(dirPath: string) {
@@ -34,8 +38,9 @@ async function getFiles(dirPath: string) {
   for (const file of files) {
     if (file.isFile()) {
       const _name = path.parse(file.name).name
-      const _dir = dirPath.split('\\').pop()
-      list.push({ text: _name, link: `/${_dir}/${_name}`})
+      console.log(dirPath)
+      const _dir = dirPath.split(SEPARATOR).splice(-2, 1)
+      list.push({ text: _name, link: `/${_dir}/md/${_name}`})
     }
   }
   return list
@@ -44,10 +49,10 @@ export default function init(router: Router) {
   router.put('/api/v1/markdown/docs', koaBody({
     multipart: true,
     formidable: {
-      uploadDir: path.join(OUT_DIR, 'docs'),
+      uploadDir: path.join(OUT_DIR, 'docs/md'),
       keepExtensions: true,
       onFileBegin: (name, file) => {
-        const dir = path.join(OUT_DIR, 'docs')
+        const dir = path.join(OUT_DIR, 'docs/md')
         file.filepath = path.join(dir, file.originalFilename ?? name)
         console.log(file.filepath)
       }
