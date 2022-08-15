@@ -11,4 +11,4 @@ EXPOSE 8000
 
 VOLUME [ "/data" ]
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "build"]
