@@ -3,8 +3,9 @@ import fs from 'fs/promises'
 import path from 'path'
 import koaBody from "koa-body";
 import { OUT_DIR } from "./main";
-import { exec } from 'child_process'
+import { execSync } from 'child_process'
 import os from 'os'
+import fetch from 'node-fetch'
 
 const SEPARATOR = os.platform() === 'win32' ? '\\' : '/'
 
@@ -54,7 +55,6 @@ export default function init(router: Router) {
       onFileBegin: (name, file) => {
         const dir = path.join(OUT_DIR, 'docs/md')
         file.filepath = path.join(dir, file.originalFilename ?? name)
-        console.log(file.filepath)
       }
     },
     onError(err) {
@@ -62,20 +62,28 @@ export default function init(router: Router) {
     }
   }), async (ctx) => {
     const files = ctx.request.files
+    const name = Array.isArray(files?.file) ?
+      path.parse(files?.file[0].originalFilename ?? '').name :
+      path.parse(files?.file.originalFilename ?? '').name
     const sidebar = await getDir('docs')
     fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
-    // const sidebar = JSON.parse(await fs.readFile('E:\\markdown-lib\\markdown\\.vitepress\\sidebar.json', 'utf-8'))
-    // console.log(sidebar)
     ctx.response.body = '上传成功'
-    exec('cd /app/markdown && npm run build', (err, stdout, stderr) => {
-      if (err) {
-        console.error(err)
-        return
-      }
-      console.log(`stdout: ${stdout}`)
-      if (stderr) {
-        console.error(`stderr: ${stderr}`)
-      }
-    })
+    try {
+      execSync('cd /app/markdown && npm run build')
+    } catch(e) {
+      console.error(e)
+    } finally {
+      const jumpLink = name ? `http://10.7.12.26:9000/docs/md/${encodeURIComponent(name)}.html` : 'http://http://10.7.12.26:9000/docs'
+      fetch('https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=133ef98b-4875-429c-a26d-3cbb98a955ff', {
+        method: 'POST',
+        body: JSON.stringify({
+          msgtype: 'markdown',
+          markdown: {
+            content: `文档平台更新\n
+            [${name}（测试链接）](${jumpLink})\n`
+          }
+        })
+      })
+    }
   })
 }
