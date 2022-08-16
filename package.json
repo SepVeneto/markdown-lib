@@ -7,7 +7,7 @@
   "scripts": {
     "build": "pnpm -C markdown run build",
     "serve": "pnpm -C server run build",
-    "bootstrap": "npm run build && npm run serve"
+    "bootstrap": "npm run serve && npm run build"
   },
   "keywords": [],
   "author": "",
