@@ -19,7 +19,7 @@ export type Sidebar = {
   items: SidebarItem[]
 }
 
-async function getDir(folder: string) {
+export async function getDir(folder: string) {
   // const dirs = await fs.readdir(path.resolve(OUT_DIR, folder, 'md'), { withFileTypes: true })
   const items = await getFiles(path.resolve(OUT_DIR, folder, 'md'))
   // for (const dir of dirs) {
@@ -46,6 +46,19 @@ async function getFiles(dirPath: string) {
   }
   return list
 }
+export async function updateSidebar() {
+  const navs = ['docs']
+  let sidebar = {}
+  for (const nav of navs) {
+    sidebar = {
+      ...sidebar,
+      ...await getDir(nav)
+    }
+  }
+  console.log('start file write')
+  await fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
+  console.log('file write success!!')
+}
 export default function init(router: Router) {
   router.put('/api/v1/markdown/docs', koaBody({
     multipart: true,
@@ -65,11 +78,9 @@ export default function init(router: Router) {
     const name = Array.isArray(files?.file) ?
       path.parse(files?.file[0].originalFilename ?? '').name :
       path.parse(files?.file.originalFilename ?? '').name
-    const sidebar = await getDir('docs')
-    console.log('start file write')
-    await fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
-    console.log('file write success!!')
+    await updateSidebar()
     ctx.response.body = '上传成功'
+
     try {
       console.log('start web build')
       execSync('cd /app/markdown && npm run build')
