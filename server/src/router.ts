@@ -66,7 +66,7 @@ export default function init(router: Router) {
       path.parse(files?.file[0].originalFilename ?? '').name :
       path.parse(files?.file.originalFilename ?? '').name
     const sidebar = await getDir('docs')
-    fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
+    await fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
     ctx.response.body = '上传成功'
     try {
       execSync('cd /app/markdown && npm run build')
