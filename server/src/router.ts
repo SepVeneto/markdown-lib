@@ -66,10 +66,14 @@ export default function init(router: Router) {
       path.parse(files?.file[0].originalFilename ?? '').name :
       path.parse(files?.file.originalFilename ?? '').name
     const sidebar = await getDir('docs')
+    console.log('start file write')
     await fs.writeFile(path.resolve(OUT_DIR, '../.vitepress/sidebar.json'), JSON.stringify(sidebar, null, 2), 'utf-8')
+    console.log('file write success!!')
     ctx.response.body = '上传成功'
     try {
+      console.log('start web build')
       execSync('cd /app/markdown && npm run build')
+      console.log('web build success!!')
     } catch(e) {
       console.error(e)
     } finally {
@@ -80,7 +84,7 @@ export default function init(router: Router) {
           msgtype: 'markdown',
           markdown: {
             content: `文档平台更新\n
-            [${name}（测试链接）](${jumpLink})\n`
+            [${name}](${jumpLink})\n`
           }
         })
       })

@@ -11,6 +11,6 @@ RUN npm config set registry http://10.7.12.26:4873 && \
 # node port
 EXPOSE 8000
 
-VOLUME ["/app/markdown/.vitepress/dist", "/app/markdown/src"]
+VOLUME ["/app/markdown/.vitepress/dist", "/app/markdown/src/docs/md"]
 
 CMD ["pnpm", "run", "bootstrap"]
